@@ -60,8 +60,10 @@ impeach %>%
 You'll want to ensure you do the grouping on both columns together, e.g. `group_by(column1, column2)`
 
 ```{r}
-
-
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(for_impeachment, gdp_above_national) %>% 
+  summarize(n())
 
 
 
@@ -76,7 +78,9 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 
 ```{r}
 
-
+impeach %>% 
+  group_by(for_impeachment, pct_bachelors_compared_to_national) %>% 
+  summarize(n())
 
 
 
@@ -95,13 +99,9 @@ In other words, you want to end up with the calculated mean for what that percen
 
 ```{r}
 
-
-
-
-
-
-
-
+impeach %>% 
+  group_by(for_impeachment, district) %>% 
+  summarize(average = mean(pct_bachelors))
 
 ```
 
@@ -110,29 +110,21 @@ The relevant column for that is `trump_percent`.
 
 ```{r}
 
-
-
-
-
-
-
-
-
-
+impeach %>% 
+  group_by(for_impeachment, district) %>% 
+  summarize(average = mean(trump_percent))
 ```
 
 6)  Filter out only the members who are a yes for impeachment. Then of those "Yes" member, how many won their 2018 election by less than 5 percentage points (`margin_flag_2018`) vs. more?
 
 ```{r}
 
-  
+impeach %>% 
+  filter(for_impeachment == "YES") %>% 
+  group_by(margin_flag_2018) %>% 
+  summarize(n())
 
-
-
-
-
-
-
+## the variable margin_flag_2018 includes those that won by 5 points of less and more
 ```
 
 7)  Come up with another breakdown of your choosing for how you'd like to examine this dataset. Say what you'll look at, and then put the code below to find the answer.
