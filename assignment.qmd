@@ -44,10 +44,12 @@ Write your code using grouping in the chunks below to help answer the following 
 
 ```{r}
 
+impeach %>% 
+  group_by(for_impeachment) %>% 
+  summarize(n())
 
 
-
-
+## 209 members favor impeachment, 26 do not
 
 
 
