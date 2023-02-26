@@ -130,14 +130,12 @@ impeach %>%
 7)  Come up with another breakdown of your choosing for how you'd like to examine this dataset. Say what you'll look at, and then put the code below to find the answer.
 
 ```{r}
+## Find the mean *percentage of the vote that Donald Trump received* for districts that are Yes for impeachment vs. No. that have a predominantly nonwhite population.
 
-  
-
-
-
-
-
-
+impeach %>% 
+  filter(pct_nonwhite_compared_to_national == "ABOVE") %>% 
+  group_by(for_impeachment, district) %>% 
+  summarize(average = mean(trump_percent))
 
 ```
 
@@ -146,28 +144,22 @@ impeach %>%
 Use the mutate() function to create two new columns: one that extracts the year from date_announced, and a second that extracts the month.
 
 ```{r}
-
+impeach <- impeach %>% 
+  mutate(year_col = year(date_announced),
+         month_col = month(date_announced))
   
-
-
-
-
-
-
 
 ```
 
 8) Using the new columns you created in #7, use grouping to count up how many House Democrats during each month announced their support of impeachment.
 
 ```{r}
-
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(month_col, 
+           for_impeachment == "YES") %>% 
+  summarize(n())
   
-
-
-
-
-
-
 
 ```
 
